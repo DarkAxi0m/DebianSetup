@@ -15,14 +15,14 @@ sudo cp /etc/network/interfaces /etc/network/interfaces.bak
 
 # Create a new network configuration file
 sudo tee /etc/network/interfaces > /dev/null << EOL
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
+source /etc/network/interfaces.d/*
 
-# The loopback network interface
 auto lo
 iface lo inet loopback
 
 # The primary network interface
+iface $interface_name inet6 auto
+
 auto $interface_name
 iface $interface_name inet static
     address $ip_address
