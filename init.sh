@@ -8,6 +8,12 @@ current_ip=$(ip -o -4 addr show dev $interface_name | awk '{split($4, a, "/"); p
 echo "interface detected: ${interface_name}"
 echo "current ip: ${current_ip}"
 
+if [ ! -f ~/.ssh/id_rsa ]; then
+    echo "No SSH key pair found. Generating a new SSH key pair..."
+    ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+    echo "SSH key pair generated."
+fi
+
 read -p "Do you want to set up a static IP address? (y/n): " setup_static_ip
 read -p "Do you want to install Docker? (y/n): " install_docker
 
@@ -86,7 +92,7 @@ if [ "$install_docker" == "y" ]; then
     # Test Docker
      docker run hello-world
 
-usermod -aG docker chris
+     usermod -aG docker chris
 
 
     echo "Docker has been installed and enabled."
