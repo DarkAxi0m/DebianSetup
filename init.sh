@@ -27,10 +27,10 @@ if [ "$setup_static_ip" == "y" ]; then
     
     
     # Backup the original network configuration file
-    sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+    cp /etc/network/interfaces /etc/network/interfaces.bak
     
     # Create a new network configuration file
-    sudo tee /etc/network/interfaces > /dev/null << EOL
+    tee /etc/network/interfaces > /dev/null << EOL
     source /etc/network/interfaces.d/*
     
     auto lo
@@ -48,7 +48,7 @@ if [ "$setup_static_ip" == "y" ]; then
 EOL
     
     # Restart the networking service to apply the changes
-    sudo service networking restart
+    service networking restart
 
     echo "Static IP configuration has been applied."
 else
