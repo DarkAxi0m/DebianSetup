@@ -17,8 +17,8 @@ gateway=${gateway:-$default_gateway}
 read -p "Enter DNS server 1 [$default_dns]: " dns1
 dns1=${dns1:-$default_dns}
 
-read -p "Enter DNS server 1 [$default_dns]: " dns1
-dns1=${dns1:-$default_dns}  # Use default if input is empty
+
+read -p "Do you want to install Docker? (y/n): " install_docker
 
 # Backup the original network configuration file
 sudo cp /etc/network/interfaces /etc/network/interfaces.bak
@@ -45,3 +45,20 @@ EOL
 sudo service networking restart
 ip address
 echo "Static IP configuration has been applied."
+
+# Prompt to install Docker
+
+
+if [ "$install_docker" == "y" ]; then
+    # Install Docker
+    sudo apt update
+    sudo apt install -y docker.io
+
+    # Start and enable Docker
+    sudo systemctl start docker
+    sudo systemctl enable docker
+
+    echo "Docker has been installed and enabled."
+else
+    echo "Docker installation was skipped."
+fi
