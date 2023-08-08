@@ -1,6 +1,6 @@
 #!/bin/bash
 
-interface_name=$(ip -o link show | awk -F': ' '{if ($2 != "lo") print $2; exit}')
+interface_name=$(ip a | grep "^[0-9]:" | grep -v lo: | cut -d ":" -f2 | xargs)
 default_subnet_mask="255.255.255.0"
 default_gateway="10.1.1.1"
 default_dns="10.1.1.10"
